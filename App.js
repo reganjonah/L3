@@ -1,20 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { Alert, TextInput, ToastAndroid, TouchableOpacity, View, Text, Button } from "react-native";
+import RNPickerSelect from "react-native-picker-select";  // Import RNPickerSelect
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const MyApp = () => {
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    const [userType, setUserType] = useState("");
+    const [userName, setUserName] = useState("");
+
+    return (
+        <View>
+            <Text>User Type:</Text>
+            <RNPickerSelect
+                onValueChange={(selectedValue) => setUserType(selectedValue)}
+                items={[
+                    { label: 'Admin', value: 'Admin' },
+                    { label: 'Guest', value: 'Guest' },
+                ]}
+            />
+
+            <Text>User Name:</Text>
+            <TextInput
+                style={{ borderWidth: 1 }}
+                onChangeText={(text) => setUserName(text)}
+            />
+
+            <Text>Password:</Text>
+            <TextInput style={{ borderWidth: 1 }} />
+
+            <Button
+                title="LOG IN"
+                onPress={() => {
+                    const welcomeMessage = `Welcome ${userType} ${userName}`;
+                    ToastAndroid.show(welcomeMessage, ToastAndroid.SHORT);
+                }}
+            />
+
+            <TouchableOpacity
+                onPress={() => {
+                    const welcomeMessage = `Welcome ${userType} ${userName}`;
+                    ToastAndroid.show(welcomeMessage, ToastAndroid.SHORT);
+                }}>
+                <Text>LOG IN</Text>
+            </TouchableOpacity>
+
+
+        </View>
+    );
+};
+
+export default MyApp;
